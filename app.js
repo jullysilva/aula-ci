@@ -10,4 +10,4 @@ const App = () => {
     return SayHello()
 }
 
-module.exports = App;
+module.exports = Add;
