@@ -1,31 +1,26 @@
 version: 2.1
 
-executors:
-  node-cypress:
-    docker:
-      - image: "cypress/browsers:node16.14.0-chrome99-ff97"
-
-orbs:
-  node: circleci/node@5
-  cypress: cypress-io/cypress@2.1.0
-
 jobs:
-
-  test:
+  build:
+    working_directory: ~/circleci-node
     docker:
-      - image: cimg/node:16.16
+      - image: "circleci/node"
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: "yarn"
-      - run:
-          name: Run tests
-          command: yarn run test:unit
+      - run: node app.js
+  test:
+    working_directory: ~/circleci-node
+    docker:
+      - image: "circleci/node"
+    steps:
+      - checkout
+      - run: npm i
+      - run: npm test
 
-workflows:sample:
+workflows:
+  build_and_test:
     jobs:
-      - test
-      - cypress/run:
-          executor: "node-cypress"
-          command: yarn run test:e2e --headless
-          yarn: true
+      - build
+      - test:
+          requires:
+            - build
