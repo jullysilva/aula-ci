@@ -1,0 +1,22 @@
+{
+  "name": "aula-ci-master",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jullysilva/aula-ci.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jullysilva/aula-ci/issues"
+  },
+  "homepage": "https://github.com/jullysilva/aula-ci#readme",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
+}
