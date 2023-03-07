@@ -6,6 +6,8 @@ const SayHello = () => {
     console.log("sup world from srcmake")
 }
 
-export default App = () => {
+const App = () => {
     return SayHello()
 }
+
+module.exports = App;
