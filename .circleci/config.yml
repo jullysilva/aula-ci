@@ -1,25 +1,31 @@
 version: 2.1
 
-jobs:
-  build:
-    working_directory: ~/circleci-python
+executors:
+  node-cypress:
     docker:
-      - image: "circleci/python:3.6.4"
-    steps:
-      - checkout
-      - run: python3 main.py
-  test:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.6.4"
-    steps:
-      - checkout
-      - run: python3 main-test.py
+      - image: "cypress/browsers:node16.14.0-chrome99-ff97"
 
-workflows:
-  build_and_test:
+orbs:
+  node: circleci/node@5
+  cypress: cypress-io/cypress@2.1.0
+
+jobs:
+
+  test:
+    docker:
+      - image: cimg/node:16.16
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: "yarn"
+      - run:
+          name: Run tests
+          command: yarn run test:unit
+
+workflows:sample:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - test
+      - cypress/run:
+          executor: "node-cypress"
+          command: yarn run test:e2e --headless
+          yarn: true
